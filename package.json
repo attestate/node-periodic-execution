@@ -1,0 +1,32 @@
+{
+  "name": "periodic-execution",
+  "version": "0.0.1",
+  "description": "A helper that periodically executes a function until a timeout",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimDaub/node-periodic-execution.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TimDaub/node-periodic-execution/issues"
+  },
+  "homepage": "https://github.com/TimDaub/node-periodic-execution#readme",
+  "scripts": {
+    "test": "ava"
+  },
+  "keywords": [
+    "periodic",
+    "execution",
+    "cron",
+    "timeout"
+  ],
+  "author": "Tim Daubenschütz <tim@daubenschuetz.de> (https://timdaub.github.io)",
+  "license": "GPL-3.0-only",
+  "devDependencies": {
+    "ava": "3.15.0",
+    "cross-fetch": "3.0.6"
+  }
+}
