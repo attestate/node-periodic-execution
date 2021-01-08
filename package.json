@@ -1,6 +1,6 @@
 {
   "name": "periodic-execution",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A helper that periodically executes a function until a timeout",
   "main": "src/index.js",
   "directories": {

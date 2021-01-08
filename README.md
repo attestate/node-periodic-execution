@@ -1,6 +1,12 @@
 # node-periodic-execution
 
+[![npm version](https://badge.fury.io/js/periodic-execution.svg)](https://badge.fury.io/js/periodic-execution) ![Node.js CI](https://github.com/TimDaub/node-periodic-execution/workflows/Node.js%20CI/badge.svg)
+
 > A helper that periodically executes a function until a timeout.
+
+node-periodic-execution is a simple node.js function that executes a passed
+function either until a this function returns an expected value or when a
+timeout threshold is reached.
 
 ## Requirements
 
@@ -17,18 +23,50 @@ $ npm i --save periodic-execution
 
 ```js
 const fetch = require("cross-fetch");
-const periodicExecution = require("periodic-execution");
+const { periodicExecution, TimeoutError } = require("periodic-execution");
+
+const timeout = 1000; // in milliseconds
 
 // Let's check if Google is online
 const fn = async () => {
   const res = await fetch("https://google.de");
-  return res.statusCode;
+  return res.status;
+};
+
+const fn2 = async () => {
+  const res = await fetch("https://google.com");
+  return res.status;
 };
 
 (async () => {
-  await periodicExecution(fn, 201, 1000, { interval: 100 });
+  await periodicExecution(fn, 200, timeout, { interval: 100 });
+
+  const expectedStatus = 500;
+  try {
+    // NOTE: Let's check if google.com's server throws a 500 status.
+    await periodicExecution(fn2, expectedStatus, timeout, { interval: 100 });
+  } catch(err) {
+    if (err instanceof TimeoutError) {
+      console.info(`Wasn't able to retrieve status ${expectedStatus} from URL`);
+    }
+  }
 })();
 ```
+
+## Changelog
+
+### 0.1.0
+
+- Remove function default export: `const periodicExecution = require...` won't
+  work anymore.
+- Introduce `TimeoutError`. It's thrown when the timeout threshold has been
+  reached.
+- Export object with properties `TimeoutError` and `periodicExecution` (see
+  Usage section).
+
+### 0.0.1
+
+- Initial release
 
 ## License
 

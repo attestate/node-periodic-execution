@@ -2,7 +2,7 @@
 const test = require("ava");
 const { hrtime } = require("process");
 
-const periodicExecution = require("../src/index.js");
+const { periodicExecution, TimeoutError } = require("../src/index.js");
 
 test("if periodic execution can run for 2 secs until a value becomes expected", async t => {
   const length = 200;
@@ -29,8 +29,10 @@ test("if periodic execution can timeout", async t => {
   const fn = () => elapsedMs() >= length;
   t.false(fn());
 
-  const result = await periodicExecution(fn, true, timeout, { interval: 50 });
-  t.false(result);
+  await t.throwsAsync(
+    async () => await periodicExecution(fn, true, timeout, { interval: 50 }),
+    { instanceOf: TimeoutError }
+  );
   const elapsedTime = elapsedMs();
   t.assert(elapsedTime > timeout && elapsedTime < length);
 });
