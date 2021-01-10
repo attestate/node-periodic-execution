@@ -4,8 +4,8 @@
 
 > A helper that periodically executes a function until a timeout.
 
-node-periodic-execution is a simple node.js function that executes a passed
-function either until a this function returns an expected value or when a
+node-periodic-execution is a simple node.js function that executes a
+function either until it returns an expected value or when a
 timeout threshold is reached.
 
 ## Requirements
