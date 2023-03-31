@@ -39,12 +39,14 @@ const fn2 = async () => {
 };
 
 (async () => {
-  await periodicExecution(fn, 200, timeout, { interval: 100 });
+  const expectedOutcome = 200;
+  const options = { interval: 100 };
+  await periodicExecution(fn, expectedOutcome, timeout, options);
 
   const expectedStatus = 500;
   try {
     // NOTE: Let's check if google.com's server throws a 500 status.
-    await periodicExecution(fn2, expectedStatus, timeout, { interval: 100 });
+    await periodicExecution(fn2, expectedStatus, timeout, options);
   } catch(err) {
     if (err instanceof TimeoutError) {
       console.info(`Wasn't able to retrieve status ${expectedStatus} from URL`);
